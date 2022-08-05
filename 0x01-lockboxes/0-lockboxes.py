@@ -12,9 +12,9 @@ def canUnlockAll(boxes):
     Compare them according his number and position. """
 
     for key_value in range(1, len(boxes) - 1):
-
+        """ Run across the lenght of boxes in keys."""
         for position_box in range(len(boxes)):
-
+            """ Run across the lenght of boxes in position."""
             exist = (key_value in boxes[position_box]
                      and key_value != position_box)
 
