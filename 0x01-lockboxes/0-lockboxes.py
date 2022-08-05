@@ -16,7 +16,7 @@ def canUnlockAll(boxes):
         for position_box in range(len(boxes)):
             """ Run across the lenght of boxes in position."""
             exist = (key_value in boxes[position_box] and key_value !=
-            position_box)
+                     position_box)
 
             if exist:
                 break
