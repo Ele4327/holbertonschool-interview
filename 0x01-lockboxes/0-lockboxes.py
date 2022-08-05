@@ -13,6 +13,8 @@ def canUnlockAll(boxes):
 
     for key_value in range(1, len(boxes) - 1):
 
+        exist = False
+
         for position_box in range(len(boxes)):
 
             exist = (key_value in boxes[position_box]
