@@ -36,7 +36,7 @@ try:
                     print("{}: {:d}".format(key, value))
             cont_lines = 0
 
-except KeyboardInterrupt:
+except Exception:
     pass
 
 finally:
