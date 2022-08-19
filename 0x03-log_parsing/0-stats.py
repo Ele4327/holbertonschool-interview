@@ -23,8 +23,7 @@ try:
             size_val_temp = int(log[-1])
 
             if code_value in dict_status_code.keys():
-                dict_status_code[code_value] = \
-                    dict_status_code[code_value] + 1
+                dict_status_code[code_value] = dict_status_code[code_value] + 1
             size = size + size_val_temp
             cont_lines = cont_lines + 1
 
