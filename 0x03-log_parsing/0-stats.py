@@ -35,6 +35,7 @@ try:
                 if dict_status_code[key] == 0:
                     continue
                 print("{}: {}".format(key, dict_status_code[key]))
+            cont_lines = 0
 
 except KeyboardInterrupt:
     pass
