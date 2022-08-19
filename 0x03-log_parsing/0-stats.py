@@ -23,17 +23,17 @@ try:
             size_val_temp = int(log[-1])
 
             if code_value in dict_status_code.keys():
-                dict_status_code[code_value] = dict_status_code[code_value] + 1
+                dict_status_code[code_value] = \
+                    dict_status_code[code_value] + 1
             size = size + size_val_temp
             cont_lines = cont_lines + 1
 
-        if (cont_lines % 10) == 0:
+        if cont_lines == 10:
             print("File size: {:d}".format(size))
 
-            for key in sorted(dict_status_code.keys()):
-                if dict_status_code[key] == 0:
-                    continue
-                print("{}: {}".format(key, dict_status_code[key]))
+            for key, value in sorted(dict_status_code.items()):
+                if value != 0:
+                    print("{}: {:d}".format(key, value))
             cont_lines = 0
 
 except KeyboardInterrupt:
@@ -41,7 +41,6 @@ except KeyboardInterrupt:
 
 finally:
     print("File size: {}".format(size))
-    for key in sorted(dict_status_code.keys()):
-        if dict_status_code[key] == 0:
-            continue
-        print("{}: {}".format(key, dict_status_code[key]))
+    for key, value in sorted(dict_status_code.items()):
+        if value != 0:
+            print("{}: {:d}".format(key, value))
