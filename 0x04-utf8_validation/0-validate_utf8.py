@@ -9,4 +9,4 @@ def validUTF8(data):
         Test
     """
     if type(data) is not list:
-        pass
+        return True
