@@ -19,10 +19,12 @@ async function getRequest (url) {
 (async () => {
   return getRequest(URL + 'films/' + idMovie);
 })().then(async (movie) => {
-  for (const ConstCharacter of movie.characters) {
-    const Character = await getRequest(ConstCharacter);
-    if (Character.detail === undefined) {
-      console.log(Character.name);
+  if (movie.detail !== 'Not found') {
+    for (const ConstCharacter of movie.characters) {
+      const Character = await getRequest(ConstCharacter);
+      if (Character.detail === undefined) {
+        console.log(Character.name);
+      }
     }
   }
 });
