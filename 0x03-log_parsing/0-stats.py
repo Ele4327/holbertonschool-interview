@@ -3,36 +3,43 @@
     Write a script that reads stdin line by line and computes metrics
 """
 
-from sys import stdin
+import sys
 
+stats = {
+    '200': 0,
+    '301': 0,
+    '400': 0,
+    '401': 0,
+    '403': 0,
+    '404': 0,
+    '405': 0,
+    '500': 0
+}
 
-total_size = 0
-stats = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
-         '404': 0, '405': 0, '500': 0}
+sizes = [0]
 
 
 def print_stats():
-    """A script that reads stdin line by line and computes metrics"""
-    print("File size: {}".format(total_size))
-    for key, value in sorted(stats.items()):
-        if value > 0:
-            print("{}: {}".format(key, value))
+    print('File size: {}'.format(sum(sizes)))
+    for s_code, count in sorted(stats.items()):
+        if count:
+            print('{}: {}'.format(s_code, count))
 
 
-if __name__ == "__main__":
-    line_counter = 0
-    try:
-        for line in stdin:
-            args = line.split()
-            line_counter += 1
-            if len(args) > 2:
-                total_size += int(args[-1])
-                if args[-2] in stats:
-                    stats.update({str(args[-2]): stats.get(args[-2]) + 1})
-            if line_counter == 10:
-                print_stats()
-                line_counter = 0
-    except KeyboardInterrupt:
-        print_stats()
-        raise
+try:
+    for i, line in enumerate(sys.stdin, start=1):
+        matches = line.rstrip().split()
+        try:
+            status_code = matches[-2]
+            file_size = matches[-1]
+            if status_code in stats.keys():
+                stats[status_code] += 1
+            sizes.append(int(file_size))
+        except Exception:
+            pass
+        if i % 10 == 0:
+            print_stats()
     print_stats()
+except KeyboardInterrupt:
+    print_stats()
+    raise
