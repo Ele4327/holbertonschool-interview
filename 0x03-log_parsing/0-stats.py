@@ -3,46 +3,36 @@
     Write a script that reads stdin line by line and computes metrics
 """
 
-import sys
+from sys import stdin
 
-dict_status_code = {
-    '200': 0, '301': 0, '400': 0, '401': 0,
-    '403': 0, '404': 0, '405': 0, '500': 0
-}
 
-size = 0
+total_size = 0
+stats = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
+         '404': 0, '405': 0, '500': 0}
 
-cont_lines = 0
+
+def print_stats():
+    """A script that reads stdin line by line and computes metrics"""
+    print("File size: {}".format(total_size))
+    for key, value in sorted(stats.items()):
+        if value > 0:
+            print("{}: {}".format(key, value))
+
 
 if __name__ == "__main__":
+    line_counter = 0
     try:
-        for line in sys.stdin:
-            log = line.split(" ")
-
-            if len(log) > 2:
-                code_value = log[-2]
-                size_val_temp = int(log[-1])
-
-                if code_value in dict_status_code.keys():
-                    dict_status_code[code_value] = \
-                        dict_status_code[code_value] + 1
-                size = size + size_val_temp
-                cont_lines = cont_lines + 1
-
-            if (cont_lines % 10) == 0:
-                print("File size: {:d}".format(size))
-
-                for key in sorted(dict_status_code.keys()):
-                    if dict_status_code[key] == 0:
-                        continue
-                    print("{}: {}".format(key, dict_status_code[key]))
-
+        for line in stdin:
+            args = line.split()
+            line_counter += 1
+            if len(args) > 2:
+                total_size += int(args[-1])
+                if args[-2] in stats:
+                    stats.update({str(args[-2]): stats.get(args[-2]) + 1})
+            if line_counter == 10:
+                print_stats()
+                line_counter = 0
     except KeyboardInterrupt:
-        pass
-
-    finally:
-        print("File size: {}".format(size))
-        for key in sorted(dict_status_code.keys()):
-            if dict_status_code[key] == 0:
-                continue
-            print("{}: {}".format(key, dict_status_code[key]))
+        print_stats()
+        raise
+    print_stats()
