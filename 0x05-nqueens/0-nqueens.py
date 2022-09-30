@@ -6,25 +6,42 @@
 import sys
 
 
-def main():
-    """This is the main function. Does the thing"""
-    if len(sys.argv) < 2:
-        print("Usage: nqueens N")
-        return
-    N = sys.argv[1]
-    if N.isdigit() is not True:
-        print("N must be a number")
-        return
-    N = int(N)
-    if N < 4:
-        print("N must be at least 4")
-        return
-    board = create_board(N)
-    queen(board, 0)
+if len(sys.argv) != 2:
+    print('Usage: nqueens N')
+    exit(1)
+n = sys.argv[1]
+try:
+    n = int(n)
+
+except ValueError:
+    print('N must be a number')
+    exit(1)
+
+if n < 4:
+    print('N must be at least 4')
+    exit(1)
+
+k = 1
+
+
+def printSolution(board):
+    """
+        Print solution in the given board
+    """
+    queens = []
+    global k
+    k = k + 1
+    for i in range(n):
+        for j in range(n):
+            if board[i][j] == 1:
+                queens.append([i, j])
+    print(queens)
 
 
 def isSafe(board, row, col):
-
+    """
+        Comprobation of the board
+    """
     for i in range(col):
         if (board[row][i]):
             return False
@@ -38,40 +55,39 @@ def isSafe(board, row, col):
 
     i = row
     j = col
-    while j >= 0 and i < len(board):
+    while j >= 0 and i < n:
         if(board[i][j]):
             return False
         i = i + 1
         j = j - 1
-
     return True
 
 
-def queen(board, col):
-    """ Adds a queen to the board"""
-    if (col == len(board)):
-        queens = []
-        for row in range(len(board)):
-            for column in range(len(board[row])):
-                if board[row][column] == 1:
-                    queens.append([row, column])
-        print(queens)
+def solveNQUtil(board, col):
+    '''
+       If queens are placed, return True
+    '''
+    if (col == n):
+        printSolution(board)
         return True
-    test = False
-    for i in range(len(board)):
+    res = False
+    for i in range(n):
         if (isSafe(board, i, col)):
             board[i][col] = 1
-            test = queen(board, col + 1) or test
+            res = solveNQUtil(board, col + 1) or res
             board[i][col] = 0
-    return test
+    return res
 
 
-def create_board(size):
-    """creates a 2d array representing a square
-    empty chess board filled with [ ]'s"""
-    board = []
-    row = []
-    if isinstance(size, int):
-        row = [0 for x in range(size)]
-        board = [row.copy() for x in range(size)]
-        return board
+def solveNQ():
+    """
+        Solve the problem
+    """
+    board = [[0 for j in range(n)] for i in range(n)]
+    if (solveNQUtil(board, 0) is False):
+        pass
+        return
+    return
+
+
+solveNQ()
