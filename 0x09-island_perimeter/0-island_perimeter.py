@@ -1,4 +1,5 @@
-#!/usr/bin/ python3
+#!/usr/bin/python3
+
 """
 Island Perimeter
 Create a function that returns the perimeter
