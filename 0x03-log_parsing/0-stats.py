@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
     Write a script that reads stdin line by line and computes metrics
 """
@@ -20,6 +21,9 @@ sizes = [0]
 
 
 def print_stats():
+    """
+        print statistics about
+    """
     print('File size: {}'.format(sum(sizes)))
     for s_code, count in sorted(stats.items()):
         if count:
